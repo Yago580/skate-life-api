@@ -7,6 +7,12 @@ class ApplicationController < ActionController::API
 
   private
 
+  def not_found(object)
+    render json: {
+      error: "#{object} Not Found"
+    }.to_json, status: 404
+  end
+
   def allow_cross_origin_requests
     headers['Access-Control-Allow-Origin'] = '*'
     headers['Access-Control-Request-Method'] = '*'

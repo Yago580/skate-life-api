@@ -36,5 +36,6 @@ RSpec.describe 'GET /skateparks/:id' do
     get '/skateparks/420'
 
     expect(json_body).to eq(expected_response)
+    expect(response.status).to eq(404)
   end
 end

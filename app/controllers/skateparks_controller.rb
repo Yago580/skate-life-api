@@ -8,15 +8,7 @@ class SkateparksController < ApplicationController
     if park
       render json: park
     else
-      not_found
+      not_found('Skatepark')
     end
-  end
-
-  private
-
-  def not_found
-    render json: {
-      error: 'Skatepark Not Found'
-    }.to_json, status: 404
   end
 end

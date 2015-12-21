@@ -13,4 +13,19 @@ FactoryGirl.define do
       lon(-122.064482)
     end
   end
+
+  factory :user do
+    name 'swag'
+    email 'swag@swag.swag'
+
+    trait :other do
+      name 'swaggy'
+      email 'swaggy@swaggy.swaggy'
+    end
+
+    trait :invalid do
+      name 'swag'
+      email nil
+    end
+  end
 end
