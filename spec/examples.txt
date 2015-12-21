@@ -1,6 +1,6 @@
 example_id                              | status  | run_time        |
 --------------------------------------- | ------- | --------------- |
-./spec/models/skatepark_spec.rb[1:1]    | pending | 0.00002 seconds |
-./spec/requests/skateparks_spec.rb[1:1] | passed  | 0.01261 seconds |
-./spec/requests/skateparks_spec.rb[2:1] | passed  | 0.01851 seconds |
-./spec/requests/skateparks_spec.rb[2:2] | passed  | 0.00539 seconds |
+./spec/models/skatepark_spec.rb[1:1]    | pending | 0.00003 seconds |
+./spec/requests/skateparks_spec.rb[1:1] | passed  | 0.00913 seconds |
+./spec/requests/skateparks_spec.rb[2:1] | passed  | 0.00682 seconds |
+./spec/requests/skateparks_spec.rb[2:2] | passed  | 0.01125 seconds |

@@ -11,13 +11,13 @@ group :development do
   gem 'byebug'
 end
 
+group :test do
+  gem 'database_cleaner'
+end
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'factory_girl_rails'
-end
-
-group :test do
-  gem 'database_cleaner'
 end
 
 # To use ActiveModel has_secure_password

@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20151221180500) do
   create_table "skateparks", force: :cascade do |t|
     t.string   "name"
     t.string   "address"
+    t.string   "state"
     t.float    "lat"
     t.float    "lon"
     t.datetime "created_at", null: false

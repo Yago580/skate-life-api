@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :skatepark do
     name 'Tennyson'
     address '28146 Huntwood Ave, Hayward, CA 94544'
+    state 'California'
     lat 37.632840
     lon(-122.064482)
 

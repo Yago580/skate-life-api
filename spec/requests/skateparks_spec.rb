@@ -25,6 +25,7 @@ RSpec.describe 'GET /skateparks/:id' do
     expect(json_body['id']).to eq(other.id)
     expect(json_body['name']).to eq(other.name)
     expect(json_body['address']).to eq(other.address)
+    expect(json_body['state']).to eq(other.state)
     expect(json_body['lat']).to eq(other.lat)
     expect(json_body['lon']).to eq(other.lon)
   end
