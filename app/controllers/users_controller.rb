@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    user = User.where(id: params['id']).first
+    user = find_user
     if user
       render json: user.to_json(include: :skateparks)
     else
@@ -37,14 +37,9 @@ class UsersController < ApplicationController
     JSON.parse(params['user'])
   end
 
-  def find_user
-    User.where(id: params['id']).first
-  end
-
   def new_user
     User.new(
       name: user_params['name'],
-      email: user_params['email']
-    )
+      email: user_params['email'])
   end
 end

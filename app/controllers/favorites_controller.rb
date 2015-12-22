@@ -1,6 +1,6 @@
 class FavoritesController < ApplicationController
   def create
-    if fav_new? && user_exists? && park_exists?
+    if fav_new? && find_user && find_skatepark(params['park_id'])
       create_fav
       send_status(:created)
     else
@@ -20,13 +20,5 @@ class FavoritesController < ApplicationController
     !Favorite.exists?(
       user_id: params['id'],
       skatepark_id: params['park_id'])
-  end
-
-  def user_exists?
-    User.exists?(params['id'])
-  end
-
-  def park_exists?
-    Skatepark.exists?(params['park_id'])
   end
 end

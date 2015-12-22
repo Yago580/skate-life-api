@@ -3,6 +3,14 @@ class ApplicationController < ActionController::API
 
   private
 
+  def find_user(id = params['id'])
+    User.where(id: id).first
+  end
+
+  def find_skatepark(id = params['id'])
+    Skatepark.where(id: id).first
+  end
+
   def send_status(status)
     render nothing: true, status: status
   end
