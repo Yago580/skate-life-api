@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   def show
     user = User.where(id: params['id']).first
     if user
-      render json: user
+      render json: user.to_json(include: :skateparks)
     else
       send_status(:not_found)
     end

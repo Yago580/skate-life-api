@@ -43,6 +43,17 @@ RSpec.describe 'GET /skateparks/:id' do
     expect(json_body['lon']).to eq(other.lon)
   end
 
+  it 'returns users that have favorited skatepark' do
+    park = create(:skatepark)
+    user = create(:user)
+    park.users << user
+
+    get "/skateparks/#{park.id}"
+
+    expect(json_body['users'][0]['name']).to eq(user.name)
+    expect(json_body['users'][0]['email']).to eq(user.email)
+  end
+
   it 'returns a 404 if skatepark with id is not found' do
     expected_response = { 'error' => 'Skatepark Not Found' }
 
