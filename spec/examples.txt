@@ -1,14 +1,21 @@
 example_id                              | status  | run_time        |
 --------------------------------------- | ------- | --------------- |
 ./spec/models/skatepark_spec.rb[1:1]    | pending | 0.00001 seconds |
-./spec/models/user_spec.rb[1:1]         | pending | 0.00003 seconds |
-./spec/requests/skateparks_spec.rb[1:1] | passed  | 0.0069 seconds  |
-./spec/requests/skateparks_spec.rb[2:1] | passed  | 0.01518 seconds |
-./spec/requests/skateparks_spec.rb[2:2] | passed  | 0.01213 seconds |
-./spec/requests/users_spec.rb[1:1]      | passed  | 0.0076 seconds  |
-./spec/requests/users_spec.rb[2:1]      | passed  | 0.00528 seconds |
-./spec/requests/users_spec.rb[2:2]      | passed  | 0.00361 seconds |
-./spec/requests/users_spec.rb[3:1]      | passed  | 0.00705 seconds |
-./spec/requests/users_spec.rb[3:2]      | passed  | 0.01242 seconds |
-./spec/requests/users_spec.rb[4:1]      | passed  | 0.01779 seconds |
-./spec/requests/users_spec.rb[4:2]      | passed  | 0.01079 seconds |
+./spec/models/user_spec.rb[1:1]         | failed  | 0.00062 seconds |
+./spec/requests/skateparks_spec.rb[1:1] | passed  | 0.01163 seconds |
+./spec/requests/skateparks_spec.rb[1:2] | passed  | 0.01902 seconds |
+./spec/requests/skateparks_spec.rb[2:1] | passed  | 0.01771 seconds |
+./spec/requests/skateparks_spec.rb[2:2] | passed  | 0.01791 seconds |
+./spec/requests/skateparks_spec.rb[2:3] | passed  | 0.00359 seconds |
+./spec/requests/users_spec.rb[1:1]      | passed  | 0.03572 seconds |
+./spec/requests/users_spec.rb[1:2]      | passed  | 0.02897 seconds |
+./spec/requests/users_spec.rb[2:1]      | passed  | 0.00722 seconds |
+./spec/requests/users_spec.rb[2:2]      | passed  | 0.01306 seconds |
+./spec/requests/users_spec.rb[2:3]      | passed  | 0.00491 seconds |
+./spec/requests/users_spec.rb[3:1]      | passed  | 0.00908 seconds |
+./spec/requests/users_spec.rb[3:2]      | passed  | 0.01474 seconds |
+./spec/requests/users_spec.rb[4:1]      | passed  | 0.00772 seconds |
+./spec/requests/users_spec.rb[4:2]      | passed  | 0.0048 seconds  |
+./spec/requests/users_spec.rb[5:1]      | passed  | 0.01951 seconds |
+./spec/requests/users_spec.rb[5:2]      | passed  | 0.01288 seconds |
+./spec/requests/users_spec.rb[5:3]      | passed  | 0.01618 seconds |

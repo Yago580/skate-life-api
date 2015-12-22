@@ -5,6 +5,7 @@ FactoryGirl.define do
     state 'California'
     lat 37.632840
     lon(-122.064482)
+    users []
 
     trait :other do
       name 'Other'
@@ -17,6 +18,7 @@ FactoryGirl.define do
   factory :user do
     name 'swag'
     email 'swag@swag.swag'
+    skateparks []
 
     trait :other do
       name 'swaggy'
