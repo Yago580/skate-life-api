@@ -1,14 +1,14 @@
 class UsersController < ApplicationController
   def index
-    render json: User.all
+    render json: User.all.to_json(include: :skateparks)
   end
 
   def show
-    user = User.where(id: params['id']).first
+    user = find_user
     if user
-      render json: user
+      render json: user.to_json(include: :skateparks)
     else
-      not_found('User')
+      send_status(:not_found)
     end
   end
 
@@ -17,21 +17,17 @@ class UsersController < ApplicationController
     if user.save
       render json: user
     else
-      render json: {
-        error: 'Email cannot be blank'
-      }.to_json, status: :bad_request
+      send_status(:bad_request)
     end
   end
 
   def destroy
-    user = User.where(id: params['id']).first
+    user = find_user
     if user
       user.destroy
-      render nothing: true, status: :no_content
+      send_status(:no_content)
     else
-      render json: {
-        error: 'User Not Found'
-      }.to_json, status: :bad_request
+      send_status(:bad_request)
     end
   end
 
@@ -44,7 +40,6 @@ class UsersController < ApplicationController
   def new_user
     User.new(
       name: user_params['name'],
-      email: user_params['email']
-    )
+      email: user_params['email'])
   end
 end

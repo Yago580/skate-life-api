@@ -1,16 +1,18 @@
 class ApplicationController < ActionController::API
   before_action :allow_cross_origin_requests
 
-  def preflight
-    render nothing: true
-  end
-
   private
 
-  def not_found(object)
-    render json: {
-      error: "#{object} Not Found"
-    }.to_json, status: 404
+  def find_user(id = params['id'])
+    User.where(id: id).first
+  end
+
+  def find_skatepark(id = params['id'])
+    Skatepark.where(id: id).first
+  end
+
+  def send_status(status)
+    render nothing: true, status: status
   end
 
   def allow_cross_origin_requests
