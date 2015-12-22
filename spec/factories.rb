@@ -17,6 +17,7 @@ FactoryGirl.define do
   factory :user do
     name 'swag'
     email 'swag@swag.swag'
+    skateparks []
 
     trait :other do
       name 'swaggy'

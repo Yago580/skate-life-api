@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     if user
       render json: user
     else
-      not_found('User')
+      send_status(:not_found)
     end
   end
 
@@ -17,28 +17,41 @@ class UsersController < ApplicationController
     if user.save
       render json: user
     else
-      render json: {
-        error: 'Email cannot be blank'
-      }.to_json, status: :bad_request
+      send_status(:bad_request)
     end
   end
 
   def destroy
-    user = User.where(id: params['id']).first
+    user = find_user
     if user
       user.destroy
-      render nothing: true, status: :no_content
+      send_status(:no_content)
     else
-      render json: {
-        error: 'User Not Found'
-      }.to_json, status: :bad_request
+      send_status(:bad_request)
+    end
+  end
+
+  def favorite
+    if fav_new? && user_exists? && park_exists?
+      create_fav
+      send_status(:created)
+    else
+      send_status(:bad_request)
     end
   end
 
   private
 
+  def send_status(status)
+    render nothing: true, status: status
+  end
+
   def user_params
     JSON.parse(params['user'])
+  end
+
+  def find_user
+    User.where(id: params['id']).first
   end
 
   def new_user
@@ -46,5 +59,25 @@ class UsersController < ApplicationController
       name: user_params['name'],
       email: user_params['email']
     )
+  end
+
+  def create_fav
+    Favorite.create(
+      user_id: params['id'],
+      skatepark_id: params['park_id'])
+  end
+
+  def fav_new?
+    !Favorite.exists?(
+      user_id: params['id'],
+      skatepark_id: params['park_id'])
+  end
+
+  def user_exists?
+    User.exists?(params['id'])
+  end
+
+  def park_exists?
+    Skatepark.exists?(params['park_id'])
   end
 end
