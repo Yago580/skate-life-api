@@ -8,7 +8,7 @@ class SkateparksController < ApplicationController
     if park
       render json: park.to_json(include: :users)
     else
-      not_found('Skatepark')
+      send_status(:not_found)
     end
   end
 end

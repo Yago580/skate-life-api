@@ -55,11 +55,8 @@ RSpec.describe 'GET /skateparks/:id' do
   end
 
   it 'returns a 404 if skatepark with id is not found' do
-    expected_response = { 'error' => 'Skatepark Not Found' }
-
     get '/skateparks/420'
 
-    expect(json_body).to eq(expected_response)
     expect(response.status).to eq(404)
   end
 end
