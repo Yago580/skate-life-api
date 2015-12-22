@@ -31,20 +31,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def favorite
-    if fav_new? && user_exists? && park_exists?
-      create_fav
-      send_status(:created)
-    else
-      send_status(:bad_request)
-    end
-  end
-
   private
-
-  def send_status(status)
-    render nothing: true, status: status
-  end
 
   def user_params
     JSON.parse(params['user'])
@@ -59,25 +46,5 @@ class UsersController < ApplicationController
       name: user_params['name'],
       email: user_params['email']
     )
-  end
-
-  def create_fav
-    Favorite.create(
-      user_id: params['id'],
-      skatepark_id: params['park_id'])
-  end
-
-  def fav_new?
-    !Favorite.exists?(
-      user_id: params['id'],
-      skatepark_id: params['park_id'])
-  end
-
-  def user_exists?
-    User.exists?(params['id'])
-  end
-
-  def park_exists?
-    Skatepark.exists?(params['park_id'])
   end
 end

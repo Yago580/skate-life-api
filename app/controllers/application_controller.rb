@@ -13,6 +13,10 @@ class ApplicationController < ActionController::API
     }.to_json, status: 404
   end
 
+  def send_status(status)
+    render nothing: true, status: status
+  end
+
   def allow_cross_origin_requests
     headers['Access-Control-Allow-Origin'] = '*'
     headers['Access-Control-Request-Method'] = '*'
