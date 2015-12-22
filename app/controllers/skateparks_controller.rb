@@ -1,6 +1,6 @@
 class SkateparksController < ApplicationController
   def index
-    render json: Skatepark.all
+    render json: Skatepark.all.to_json(include: :users)
   end
 
   def show

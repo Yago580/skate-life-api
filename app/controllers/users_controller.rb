@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def index
-    render json: User.all
+    render json: User.all.to_json(include: :skateparks)
   end
 
   def show

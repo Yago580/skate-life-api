@@ -13,6 +13,19 @@ RSpec.describe 'GET /skateparks' do
     expect(json_body[1]['id']).to eq(other.id)
     expect(json_body[1]['name']).to eq(other.name)
   end
+
+  it 'returns users that have favorited skateparks' do
+    tenny = create(:skatepark)
+    other = create(:skatepark, :other)
+    user = create(:user)
+    tenny.users << user
+    other.users << user
+
+    get '/skateparks'
+
+    expect(json_body[0]['users'][0]['name']).to eq(user.name)
+    expect(json_body[1]['users'][0]['email']).to eq(user.email)
+  end
 end
 
 RSpec.describe 'GET /skateparks/:id' do
