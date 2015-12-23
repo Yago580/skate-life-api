@@ -9,6 +9,7 @@ group :development do
   gem 'pry-rails'
   gem 'spring'
   gem 'byebug'
+  gem 'bullet'
 end
 
 group :test do

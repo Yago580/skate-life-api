@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   def index
-    render json: User.all.to_json(include: :skateparks)
+    users = User.includes(:skateparks).find_each.lazy
+    render json: users.as_json(include: { skateparks: {} })
   end
 
   def show

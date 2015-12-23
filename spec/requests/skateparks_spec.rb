@@ -1,62 +1,59 @@
 require 'rails_helper'
 
-RSpec.describe 'GET /skateparks' do
-  it 'returns a list of all skateparks' do
-    tenny = create(:skatepark)
-    other = create(:skatepark, :other)
+RSpec.describe 'Skateparks' do
+  context 'GET /skateparks' do
+    it 'returns a list of all skateparks' do
+      skateparks = create_skateparks
 
-    get '/skateparks'
+      get '/skateparks'
 
-    expect(json_body.count).to eq(2)
-    expect(json_body[0]['id']).to eq(tenny.id)
-    expect(json_body[0]['name']).to eq(tenny.name)
-    expect(json_body[1]['id']).to eq(other.id)
-    expect(json_body[1]['name']).to eq(other.name)
+      skateparks.each_with_index do |park, i|
+        expect(json_body[i]['id']).to eq(park.id)
+        expect(json_body[i]['name']).to eq(park.name)
+        expect(json_body[i]['address']).to eq(park.address)
+      end
+    end
+
+    it 'returns users that have favorited skateparks' do
+      user = create_user
+      create_skateparks.each { |park| park.users << user }
+
+      get '/skateparks'
+
+      expect(json_body[0]['users'][0]['name']).to eq(user.name)
+      expect(json_body[1]['users'][0]['email']).to eq(user.email)
+    end
   end
 
-  it 'returns users that have favorited skateparks' do
-    tenny = create(:skatepark)
-    other = create(:skatepark, :other)
-    user = create(:user)
-    tenny.users << user
-    other.users << user
+  context 'GET /skateparks/:id' do
+    it 'returns skatepark with proper id' do
+      other = create_skateparks[-1]
 
-    get '/skateparks'
+      get "/skateparks/#{other.id}"
 
-    expect(json_body[0]['users'][0]['name']).to eq(user.name)
-    expect(json_body[1]['users'][0]['email']).to eq(user.email)
-  end
-end
+      expect(json_body['id']).to eq(other.id)
+      expect(json_body['name']).to eq(other.name)
+      expect(json_body['address']).to eq(other.address)
+      expect(json_body['state']).to eq(other.state)
+      expect(json_body['lat']).to eq(other.lat)
+      expect(json_body['lon']).to eq(other.lon)
+    end
 
-RSpec.describe 'GET /skateparks/:id' do
-  it 'returns skatepark with proper id' do
-    create(:skatepark)
-    other = create(:skatepark, :other)
+    it 'returns users that have favorited skatepark' do
+      park = create_skatepark
+      user = create_user
+      park.users << user
 
-    get "/skateparks/#{other.id}"
+      get "/skateparks/#{park.id}"
 
-    expect(json_body['id']).to eq(other.id)
-    expect(json_body['name']).to eq(other.name)
-    expect(json_body['address']).to eq(other.address)
-    expect(json_body['state']).to eq(other.state)
-    expect(json_body['lat']).to eq(other.lat)
-    expect(json_body['lon']).to eq(other.lon)
-  end
+      expect(json_body['users'][0]['name']).to eq(user.name)
+      expect(json_body['users'][0]['email']).to eq(user.email)
+    end
 
-  it 'returns users that have favorited skatepark' do
-    park = create(:skatepark)
-    user = create(:user)
-    park.users << user
+    it 'returns a 404 if skatepark with id is not found' do
+      get '/skateparks/420'
 
-    get "/skateparks/#{park.id}"
-
-    expect(json_body['users'][0]['name']).to eq(user.name)
-    expect(json_body['users'][0]['email']).to eq(user.email)
-  end
-
-  it 'returns a 404 if skatepark with id is not found' do
-    get '/skateparks/420'
-
-    expect(response.status).to eq(404)
+      expect(response.status).to eq(404)
+    end
   end
 end
