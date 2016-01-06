@@ -2,24 +2,23 @@ require 'rails_helper'
 
 RSpec.describe 'GET /skateparks' do
   it 'returns a list of all skateparks' do
-    tenny = create(:skatepark)
-    other = create(:skatepark, :other)
+    skateparks = [
+      create(:skatepark), create(:skatepark, :other)]
 
     get '/skateparks'
 
-    expect(json_body.count).to eq(2)
-    expect(json_body[0]['id']).to eq(tenny.id)
-    expect(json_body[0]['name']).to eq(tenny.name)
-    expect(json_body[1]['id']).to eq(other.id)
-    expect(json_body[1]['name']).to eq(other.name)
+    skateparks.each_with_index do |skatepark, i|
+      expect(json_body[i]['id']).to eq(skatepark.id)
+      expect(json_body[i]['name']).to eq(skatepark.name)
+      expect(json_body[i]['address']).to eq(skatepark.address)
+    end
   end
 
   it 'returns users that have favorited skateparks' do
-    tenny = create(:skatepark)
-    other = create(:skatepark, :other)
     user = create(:user)
-    tenny.users << user
-    other.users << user
+    skateparks = [
+      create(:skatepark), create(:skatepark, :other)]
+    skateparks.each { |park| park.users << user }
 
     get '/skateparks'
 
@@ -30,8 +29,9 @@ end
 
 RSpec.describe 'GET /skateparks/:id' do
   it 'returns skatepark with proper id' do
-    create(:skatepark)
-    other = create(:skatepark, :other)
+    skateparks = [
+      create(:skatepark), create(:skatepark, :other)]
+    other = skateparks[-1]
 
     get "/skateparks/#{other.id}"
 
@@ -44,11 +44,11 @@ RSpec.describe 'GET /skateparks/:id' do
   end
 
   it 'returns users that have favorited skatepark' do
-    park = create(:skatepark)
+    skatepark = create(:skatepark)
     user = create(:user)
-    park.users << user
+    skatepark.users << user
 
-    get "/skateparks/#{park.id}"
+    get "/skateparks/#{skatepark.id}"
 
     expect(json_body['users'][0]['name']).to eq(user.name)
     expect(json_body['users'][0]['email']).to eq(user.email)

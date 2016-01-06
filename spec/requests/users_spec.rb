@@ -2,32 +2,29 @@ require 'rails_helper'
 
 RSpec.describe 'GET /users' do
   it 'should return a list of all users' do
-    user = create(:user)
-    other = create(:user, :other)
+    users = [create(:user), create(:user, :other)]
 
     get '/users'
 
-    expect(json_body.count).to eq(2)
-    expect(json_body[0]['id']).to eq(user.id)
-    expect(json_body[0]['email']).to eq(user.email)
-    expect(json_body[0]['name']).to eq(user.name)
-    expect(json_body[1]['id']).to eq(other.id)
-    expect(json_body[1]['name']).to eq(other.name)
+    users.each_with_index do |user, i|
+      expect(json_body[i]['id']).to eq(user.id)
+      expect(json_body[i]['email']).to eq(user.email)
+      expect(json_body[i]['name']).to eq(user.name)
+    end
   end
 
   it 'should return skateparks favorites by users' do
-    user = create(:user)
-    other = create(:user, :other)
-    park = create(:skatepark)
-    user.skateparks << park
-    other.skateparks << park
+    users = [create(:user), create(:user, :other)]
+    skatepark = create(:skatepark)
+    users.each { |user| user.skateparks << skatepark }
 
     get '/users'
 
-    expect(json_body[0]['skateparks'][0]['name']).
-      to eq(park.name)
-    expect(json_body[1]['skateparks'][0]['address']).
-      to eq(park.address)
+    json_body.each do |user|
+      park = user['skateparks'][0]
+      expect(park['name']).to eq(skatepark.name)
+      expect(park['address']).to eq(skatepark.address)
+    end
   end
 end
 
@@ -44,13 +41,14 @@ RSpec.describe 'GET /users/:id' do
 
   it 'should return skateparks that user has favorited' do
     user = create(:user)
-    park = create(:skatepark)
-    user.skateparks << park
+    skatepark = create(:skatepark)
+    user.skateparks << skatepark
 
     get "/users/#{user.id}"
 
-    expect(json_body['skateparks'][0]['name']).to eq(park.name)
-    expect(json_body['skateparks'][0]['address']).to eq(park.address)
+    park = json_body['skateparks'][0]
+    expect(park['name']).to eq(skatepark.name)
+    expect(park['address']).to eq(skatepark.address)
   end
 
   it 'should return 404 if user cannot be found' do
