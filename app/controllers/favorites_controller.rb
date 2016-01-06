@@ -1,6 +1,6 @@
 class FavoritesController < ApplicationController
   def create
-    if !find_fav && find_user && find_skatepark(params['park_id'])
+    if fav_valid?
       create_fav
       send_status(:created)
     else
@@ -19,6 +19,10 @@ class FavoritesController < ApplicationController
   end
 
   private
+
+  def fav_valid?
+    !find_fav && find_user && find_skatepark(params['park_id'])
+  end
 
   def create_fav
     Favorite.create(
