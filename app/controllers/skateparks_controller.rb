@@ -1,7 +1,6 @@
 class SkateparksController < ApplicationController
   def index
-    parks = Skatepark.includes(:users).find_each.lazy
-    render json: parks.as_json(include: { users: {} })
+    render json: Skatepark.all
   end
 
   def show
