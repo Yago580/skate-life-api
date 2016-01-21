@@ -13,18 +13,6 @@ RSpec.describe 'GET /skateparks' do
       expect(json_body[i]['address']).to eq(skatepark.address)
     end
   end
-
-  it 'returns users that have favorited skateparks' do
-    user = create(:user)
-    skateparks = [
-      create(:skatepark), create(:skatepark, :other)]
-    skateparks.each { |park| park.users << user }
-
-    get '/skateparks'
-
-    expect(json_body[0]['users'][0]['name']).to eq(user.name)
-    expect(json_body[1]['users'][0]['email']).to eq(user.email)
-  end
 end
 
 RSpec.describe 'GET /skateparks/:id' do
@@ -46,12 +34,13 @@ RSpec.describe 'GET /skateparks/:id' do
   it 'returns users that have favorited skatepark' do
     skatepark = create(:skatepark)
     user = create(:user)
-    skatepark.users << user
+    create_favorite(user.id, skatepark.id)
 
     get "/skateparks/#{skatepark.id}"
 
-    expect(json_body['users'][0]['name']).to eq(user.name)
-    expect(json_body['users'][0]['email']).to eq(user.email)
+    users_who_faved = json_body['users_who_faved']
+    expect(users_who_faved[0]['name']).to eq(user.name)
+    expect(users_who_faved[0]['email']).to eq(user.email)
   end
 
   it 'returns a 404 if skatepark with id is not found' do

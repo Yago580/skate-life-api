@@ -1,8 +1,7 @@
 class FavoritesController < ApplicationController
   def create
     if fav_valid?
-      create_favorite
-      send_status(:created)
+      create_favorite && send_status(:created)
     else
       send_status(:bad_request)
     end
@@ -11,8 +10,7 @@ class FavoritesController < ApplicationController
   def destroy
     favorite = find_favorite
     if favorite
-      favorite.destroy
-      send_status(:no_content)
+      favorite.destroy && send_status(:no_content)
     else
       send_status(:bad_request)
     end
@@ -22,8 +20,8 @@ class FavoritesController < ApplicationController
 
   def fav_valid?
     !find_favorite &&
-      find_user(params['user_id']) &&
-      find_skatepark(params['skatepark_id'])
+      User.find_by_id(params['user_id']) &&
+      Skatepark.find_by_id(params['skatepark_id'])
   end
 
   def create_favorite
@@ -33,8 +31,8 @@ class FavoritesController < ApplicationController
   end
 
   def find_favorite
-    Favorite.where(
+    Favorite.find_by(
       user_id: params['user_id'],
-      skatepark_id: params['skatepark_id']).first
+      skatepark_id: params['skatepark_id'])
   end
 end

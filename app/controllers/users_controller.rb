@@ -1,13 +1,12 @@
 class UsersController < ApplicationController
   def index
-    users = User.includes(:skateparks).find_each.lazy
-    render json: users.as_json(include: { skateparks: {} })
+    render json: User.to_json_with_favorites
   end
 
   def show
-    user = find_user
+    user = User.find_by_id(params['id'])
     if user
-      render json: user.to_json(include: :skateparks)
+      render json: user.to_json(include: :favorite_parks)
     else
       send_status(:not_found)
     end
@@ -23,9 +22,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    user = find_user
-    if user
-      user.destroy
+    if User.find_and_destroy(params['id'])
       send_status(:no_content)
     else
       send_status(:bad_request)
