@@ -5,7 +5,7 @@ FactoryGirl.define do
     state 'California'
     lat 37.632840
     lon(-122.064482)
-    users []
+    users_who_faved []
 
     trait :other do
       name 'Other'
