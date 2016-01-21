@@ -1,6 +1,8 @@
 # skate-life-api
 [![Dependency Status](https://gemnasium.com/yago580/skate-life-api.svg)](https://gemnasium.com/yago580/skate-life-api)
 
+`https://skate-life-api.herokuapp.com`
+
 ### Skateparks
 * `GET /skateparks`
 * `GET /skateparks/:id`
