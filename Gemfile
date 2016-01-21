@@ -1,9 +1,11 @@
 source 'https://rubygems.org'
+ruby '2.2.3'
 
 gem 'rails', '4.2.5'
 gem 'rails-api'
 gem 'pg'
 gem 'puma'
+gem 'rack-timeout'
 
 group :development do
   gem 'pry-rails'
@@ -22,9 +24,11 @@ group :development, :test do
   gem 'factory_girl_rails'
 end
 
-# To use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+group :production do
+  gem 'rails_12factor'
+end
 
+# Look into using this
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 # To use debugger
