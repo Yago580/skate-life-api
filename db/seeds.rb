@@ -6,13 +6,16 @@ def create_users
   end
 end
 
+# Using this method because mapping the foreach enumerable throw
+# an error on heroku
 def create_parks_from_csv(path)
-  CSV.foreach(path, headers: true).map do |row|
+  parks = []
+  CSV.foreach(path, headers: true) do |row|
     park = Hash[row]
     next unless park['address']
 
     name = park['name'] ? park['name'] : park['city']
-    Skatepark.create(
+    parks << Skatepark.create(
       name: name, address: park['address'], state: park['state'])
   end
 end
