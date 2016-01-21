@@ -5,6 +5,7 @@ gem 'rails', '4.2.5'
 gem 'rails-api'
 gem 'pg'
 gem 'puma'
+gem 'rack-timeout'
 
 group :development do
   gem 'pry-rails'
