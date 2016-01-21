@@ -5,12 +5,11 @@ class User < ActiveRecord::Base
            through: :favorites, source: :skatepark
 
   def self.to_json_with_favorites
-    User.includes(:favorites).find_each.lazy.
+    includes(:favorites).find_each.lazy.
       as_json(include: { favorite_parks: {} })
   end
 
   def self.find_and_destroy(id)
-    user = find_by_id(id)
-    user.destroy if user
+    (user = find_by_id(id)) && user.destroy
   end
 end
