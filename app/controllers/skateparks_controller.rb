@@ -5,7 +5,7 @@ class SkateparksController < ApplicationController
   end
 
   def show
-    park = find_skatepark
+    park = Skatepark.find_by_id(params['id'])
     if park
       render json: park.to_json(include: :users)
     else
