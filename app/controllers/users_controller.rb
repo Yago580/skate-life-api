@@ -22,9 +22,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    user = User.find_by_id(params['id'])
-    if user
-      user.destroy
+    if User.find_and_destroy(params['id'])
       send_status(:no_content)
     else
       send_status(:bad_request)
