@@ -33,8 +33,8 @@ class FavoritesController < ApplicationController
   end
 
   def find_favorite
-    Favorite.where(
+    Favorite.find_by(
       user_id: params['user_id'],
-      skatepark_id: params['skatepark_id']).first
+      skatepark_id: params['skatepark_id'])
   end
 end
