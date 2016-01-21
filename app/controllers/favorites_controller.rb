@@ -22,8 +22,8 @@ class FavoritesController < ApplicationController
 
   def fav_valid?
     !find_favorite &&
-      find_user(params['user_id']) &&
-      find_skatepark(params['skatepark_id'])
+      User.find_by_id(params['user_id']) &&
+      Skatepark.find_by_id(params['skatepark_id'])
   end
 
   def create_favorite

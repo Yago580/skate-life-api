@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    user = find_user
+    user = User.find_by_id(params['id'])
     if user
       render json: user.to_json(include: :skateparks)
     else
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    user = find_user
+    user = User.find_by_id(params['id'])
     if user
       user.destroy
       send_status(:no_content)
