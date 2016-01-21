@@ -13,6 +13,8 @@
 * `GET /users/:id`
 * `DELETE /users/:id`
 
-### Favorites
+### Associations
+
+#### Favorites
 * `POST /favorites` `user_id, skatepark_id`
 * `DELETE /favorites/:user_id/:skatepark_id`
