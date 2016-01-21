@@ -1,13 +1,12 @@
 class UsersController < ApplicationController
   def index
-    render json: User.all_with_skateparks.
-      as_json(include: { skateparks: {} })
+    render json: User.to_json_with_favorites
   end
 
   def show
     user = User.find_by_id(params['id'])
     if user
-      render json: user.to_json(include: :skateparks)
+      render json: user.to_json(include: :favorite_parks)
     else
       send_status(:not_found)
     end

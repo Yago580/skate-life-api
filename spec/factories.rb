@@ -18,7 +18,7 @@ FactoryGirl.define do
   factory :user do
     name 'swag'
     email 'swag@swag.swag'
-    skateparks []
+    favorite_parks []
 
     trait :other do
       name 'swaggy'
@@ -29,5 +29,10 @@ FactoryGirl.define do
       name 'swag'
       email nil
     end
+  end
+
+  factory :favorite do
+    user_id 1
+    skatepark_id 1
   end
 end

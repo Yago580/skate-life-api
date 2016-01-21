@@ -16,14 +16,14 @@ RSpec.describe 'GET /users' do
   it 'should return skateparks favorites by users' do
     users = [create(:user), create(:user, :other)]
     skatepark = create(:skatepark)
-    users.each { |user| user.skateparks << skatepark }
+    users.each { |user| create_favorite(user.id, skatepark.id) }
 
     get '/users'
 
     json_body.each do |user|
-      park = user['skateparks'][0]
-      expect(park['name']).to eq(skatepark.name)
-      expect(park['address']).to eq(skatepark.address)
+      favorited_park = user['favorite_parks'][0]
+      expect(favorited_park['name']).to eq(skatepark.name)
+      expect(favorited_park['address']).to eq(skatepark.address)
     end
   end
 end
@@ -42,13 +42,13 @@ RSpec.describe 'GET /users/:id' do
   it 'should return skateparks that user has favorited' do
     user = create(:user)
     skatepark = create(:skatepark)
-    user.skateparks << skatepark
+    create_favorite(user.id, skatepark.id)
 
     get "/users/#{user.id}"
 
-    park = json_body['skateparks'][0]
-    expect(park['name']).to eq(skatepark.name)
-    expect(park['address']).to eq(skatepark.address)
+    favorited_park = json_body['favorite_parks'][0]
+    expect(favorited_park['name']).to eq(skatepark.name)
+    expect(favorited_park['address']).to eq(skatepark.address)
   end
 
   it 'should return 404 if user cannot be found' do

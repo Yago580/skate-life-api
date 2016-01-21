@@ -7,7 +7,7 @@ RSpec.describe 'POST /favorites' do
 
     expect do
       post '/favorites', user_id: user.id, skatepark_id: skatepark.id
-    end.to change { user.skateparks.count }.by(1)
+    end.to change { user.favorite_parks.count }.by(1)
 
     fav = Favorite.where(user_id: user.id, skatepark_id: skatepark.id).first
 
@@ -18,11 +18,11 @@ RSpec.describe 'POST /favorites' do
   it 'should return 400 if favorite already exists' do
     user = create(:user)
     skatepark = create(:skatepark)
-    user.skateparks << skatepark
+    user.favorite_parks << skatepark
 
     expect do
       post '/favorites', user_id: user.id, skatepark_id: skatepark.id
-    end.to_not change { user.skateparks.count }
+    end.to_not change { user.favorite_parks.count }
     expect(response.status).to eq(400)
   end
 
@@ -32,12 +32,12 @@ RSpec.describe 'POST /favorites' do
 
     expect do
       post '/favorites', user_id: user.id, skatepark_id: 5
-    end.to_not change { user.skateparks.count }
+    end.to_not change { user.favorite_parks.count }
     expect(response.status).to eq(400)
 
     expect do
       post '/favorites', user_id: 1, skatepark_id: skatepark.id
-    end.to_not change { user.skateparks.count }
+    end.to_not change { user.favorite_parks.count }
     expect(response.status).to eq(400)
   end
 end
@@ -46,11 +46,11 @@ RSpec.describe 'DELETE /favorites' do
   it "should remove park from user's favorites" do
     user = create(:user)
     skatepark = create(:skatepark)
-    user.skateparks << skatepark
+    user.favorite_parks << skatepark
 
     expect do
       delete "/favorite/#{user.id}/#{skatepark.id}"
-    end.to change { user.skateparks.count }.by(-1)
+    end.to change { user.favorite_parks.count }.by(-1)
     expect(response.status).to eq(204)
   end
 
@@ -59,7 +59,7 @@ RSpec.describe 'DELETE /favorites' do
 
     expect do
       delete "/favorite/#{user.id}/420"
-    end.to_not change { user.skateparks.count }
+    end.to_not change { user.favorite_parks.count }
     expect(response.status).to eq(400)
   end
 end
