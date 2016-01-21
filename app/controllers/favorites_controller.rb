@@ -1,8 +1,7 @@
 class FavoritesController < ApplicationController
   def create
     if fav_valid?
-      create_favorite
-      send_status(:created)
+      create_favorite && send_status(:created)
     else
       send_status(:bad_request)
     end
@@ -11,8 +10,7 @@ class FavoritesController < ApplicationController
   def destroy
     favorite = find_favorite
     if favorite
-      favorite.destroy
-      send_status(:no_content)
+      favorite.destroy && send_status(:no_content)
     else
       send_status(:bad_request)
     end
