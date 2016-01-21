@@ -1,4 +1,9 @@
 # skate-life-api
 [![Dependency Status](https://gemnasium.com/yago580/skate-life-api.svg)](https://gemnasium.com/yago580/skate-life-api)
 
-New and improved
+## API Endpoints
+
+`GET /skateparks`
+`GET /skateparks/:id`
+`GET /users`
+`POST /users` params -> (email, password)
