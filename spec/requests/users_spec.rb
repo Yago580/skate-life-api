@@ -50,12 +50,6 @@ RSpec.describe 'GET /users/:id' do
     expect(favorited_park['name']).to eq(skatepark.name)
     expect(favorited_park['address']).to eq(skatepark.address)
   end
-
-  it 'should return 404 if user cannot be found' do
-    get '/users/420'
-
-    expect(response.status).to eq(404)
-  end
 end
 
 RSpec.describe 'POST /users' do
@@ -69,13 +63,13 @@ RSpec.describe 'POST /users' do
     expect(json_body['email']).to eq(user.email)
   end
 
-  it 'should return 400 if user cannot be created' do
+  it 'should return 422 if user cannot be created' do
     user = build(:user, :invalid)
 
     expect do
       post '/users', user: user.to_json
     end.to_not change { User.count }
-    expect(response.status).to eq(400)
+    expect(response.status).to eq(422)
   end
 end
 
@@ -87,12 +81,5 @@ RSpec.describe 'DELETE /users' do
       delete "/users/#{user.id}"
     end.to change { User.count }.by(-1)
     expect(response.status).to eq(204)
-  end
-
-  it 'should return 400 if user does not exist' do
-    expect do
-      delete '/users/420'
-    end.to_not change { User.count }
-    expect(response.status).to eq(400)
   end
 end
