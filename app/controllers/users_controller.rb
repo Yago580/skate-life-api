@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def index
-    render json: User.to_json_with_favorites
+    render json: User.all
   end
 
   def show
