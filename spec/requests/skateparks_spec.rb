@@ -42,10 +42,4 @@ RSpec.describe 'GET /skateparks/:id' do
     expect(users_who_faved[0]['name']).to eq(user.name)
     expect(users_who_faved[0]['email']).to eq(user.email)
   end
-
-  it 'returns a 404 if skatepark with id is not found' do
-    get '/skateparks/420'
-
-    expect(response.status).to eq(404)
-  end
 end
