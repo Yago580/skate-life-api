@@ -1,38 +1,25 @@
 class FavoritesController < ApplicationController
   def create
     if fav_valid?
-      create_favorite && send_status(:created)
+      Favorite.create(favorite_params)
     else
-      send_status(:bad_request)
+      send_status(:unprocessable_entity)
     end
   end
 
   def destroy
-    favorite = find_favorite
-    if favorite
-      favorite.destroy && send_status(:no_content)
-    else
-      send_status(:bad_request)
-    end
+    Favorite.find_by(favorite_params).destroy
+    send_status(:no_content)
   end
 
   private
 
   def fav_valid?
-    !find_favorite &&
-      User.find_by_id(params['user_id']) &&
-      Skatepark.find_by_id(params['skatepark_id'])
+    Favorite.find_by(favorite_params).nil?
   end
 
-  def create_favorite
-    Favorite.create(
-      user_id: params['user_id'],
-      skatepark_id: params['skatepark_id'])
-  end
-
-  def find_favorite
-    Favorite.find_by(
-      user_id: params['user_id'],
-      skatepark_id: params['skatepark_id'])
+  def favorite_params
+    { user_id: params['user_id'],
+      skatepark_id: params['skatepark_id'] }
   end
 end

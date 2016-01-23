@@ -15,7 +15,7 @@ RSpec.describe 'POST /favorites' do
     expect(fav.skatepark).to eq(skatepark)
   end
 
-  it 'should return 400 if favorite already exists' do
+  it 'should return 422 if favorite already exists' do
     user = create(:user)
     skatepark = create(:skatepark)
     user.favorite_parks << skatepark
@@ -23,22 +23,7 @@ RSpec.describe 'POST /favorites' do
     expect do
       post '/favorites', user_id: user.id, skatepark_id: skatepark.id
     end.to_not change { user.favorite_parks.count }
-    expect(response.status).to eq(400)
-  end
-
-  it 'should return 400 if skatepark or user does not exist' do
-    user = create(:user)
-    skatepark = create(:skatepark)
-
-    expect do
-      post '/favorites', user_id: user.id, skatepark_id: 5
-    end.to_not change { user.favorite_parks.count }
-    expect(response.status).to eq(400)
-
-    expect do
-      post '/favorites', user_id: 1, skatepark_id: skatepark.id
-    end.to_not change { user.favorite_parks.count }
-    expect(response.status).to eq(400)
+    expect(response.status).to eq(422)
   end
 end
 
@@ -52,14 +37,5 @@ RSpec.describe 'DELETE /favorites' do
       delete "/favorite/#{user.id}/#{skatepark.id}"
     end.to change { user.favorite_parks.count }.by(-1)
     expect(response.status).to eq(204)
-  end
-
-  it 'should return 400 if user has not favorited park' do
-    user = create(:user)
-
-    expect do
-      delete "/favorite/#{user.id}/420"
-    end.to_not change { user.favorite_parks.count }
-    expect(response.status).to eq(400)
   end
 end

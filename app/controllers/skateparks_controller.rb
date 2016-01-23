@@ -4,11 +4,8 @@ class SkateparksController < ApplicationController
   end
 
   def show
-    park = Skatepark.find_by_id(params['id'])
-    if park
-      render json: park.to_json(include: :users_who_faved)
-    else
-      send_status(:not_found)
-    end
+    skatepark = Skatepark.find(params['id'])
+    render json: skatepark.to_json(
+      include: :users_who_faved)
   end
 end
