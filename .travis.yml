@@ -1,0 +1,18 @@
+language: ruby
+rvm:
+  - 2.2.3
+matrix:
+  include:
+    - rvm: 1.9.3
+      gemfile: gemfiles/1.9.3-Gemfile
+  allow_failures:
+    - rvm: 1.9.3
+    - rvm: 2.2.3
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database skAtePI_test;' -U postgres
+test:
+  adapter: postgresql
+  database: skAtePI_test
+  username: postgres
