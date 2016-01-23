@@ -8,7 +8,7 @@ class FavoritesController < ApplicationController
   end
 
   def destroy
-    Favorite.destroy_all(favorite_params)
+    Favorite.find_by(favorite_params).destroy
     send_status(:no_content)
   end
 
