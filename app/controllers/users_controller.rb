@@ -4,40 +4,29 @@ class UsersController < ApplicationController
   end
 
   def show
-    user = User.find_by_id(params['id'])
-    if user
-      render json: user.to_json(include: :favorite_parks)
-    else
-      send_status(:not_found)
-    end
+    user = User.find(params['id'])
+    render json: user.to_json(
+      include: :favorite_parks)
   end
 
   def create
-    user = new_user
+    user = User.new(user_params)
     if user.save
       render json: user
     else
-      send_status(:bad_request)
+      send_status(:unprocessable_entity)
     end
   end
 
   def destroy
-    if User.find_and_destroy(params['id'])
-      send_status(:no_content)
-    else
-      send_status(:bad_request)
-    end
+    User.destroy(params['id'])
+    send_status(:no_content)
   end
 
   private
 
   def user_params
-    JSON.parse(params['user'])
-  end
-
-  def new_user
-    User.new(
-      name: user_params['name'],
-      email: user_params['email'])
+    { name: JSON.parse(params['user'])['name'],
+      email: JSON.parse(params['user'])['email'] }
   end
 end
