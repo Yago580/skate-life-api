@@ -32,7 +32,7 @@ FactoryGirl.define do
   end
 
   factory :favorite do
-    user_id 1
-    skatepark_id 1
+    sequence(:user_id)
+    sequence(:skatepark_id)
   end
 end
