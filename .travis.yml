@@ -1,17 +1,17 @@
 language: ruby
-rvm:
-  - 2.2.3
 matrix:
   include:
     - rvm: 1.9.3
-      gemfile: gemfiles/1.9.3-Gemfile
-  allow_failures:
-    - rvm: 1.9.3
+      gemfile: gemfiles/build-Gemfile
     - rvm: 2.2.3
-services:
-  - postgresql
+      gemfile: gemfiles/build-Gemfile
 before_script:
+  - cp config/database.travis.yml config/database.yml
   - psql -c 'create database skAtePI_test;' -U postgres
+  - bundle exec rake db:create RAILS_ENV=test
+  - bundle exec rake db:migrate RAILS_ENV=test
+script:
+  - RAILS_ENV=test bundle exec rake spec
 test:
   adapter: postgresql
   database: skAtePI_test

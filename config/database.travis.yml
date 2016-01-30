@@ -1,0 +1,4 @@
+test:
+  adapter: postgresql
+  database: skAtePI_test
+  username: postgres
