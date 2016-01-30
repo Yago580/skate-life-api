@@ -16,8 +16,8 @@ FactoryGirl.define do
   end
 
   factory :user do
-    name 'swag'
-    email 'swag@swag.swag'
+    sequence(:name) { |n| "person#{n}" }
+    sequence(:email) { |n| "swag#{n}@swag.swag" }
     favorite_parks []
 
     trait :other do
