@@ -1,5 +1,5 @@
 # skate-life-api
-[![Dependency Status](https://gemnasium.com/yago580/skate-life-api.svg)](https://gemnasium.com/yago580/skate-life-api)
+[![Dependency Status](https://gemnasium.com/yago580/skate-life-api.svg)](https://gemnasium.com/yago580/skate-life-api) [![Build Status](https://travis-ci.org/yago580/skate-life-api.svg)](https://travis-ci.org/yago580/skate-life-api)
 
 `https://skate-life-api.herokuapp.com`
 
